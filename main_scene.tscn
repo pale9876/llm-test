@@ -1,0 +1,59 @@
+[gd_scene format=3 uid="uid://c6j87g53xlnhj"]
+
+[ext_resource type="Script" uid="uid://cytd5hdvwn7y" path="res://main_scene.gd" id="1_0f027"]
+
+[node name="Mainscene" type="Node2D" unique_id=1096604789]
+script = ExtResource("1_0f027")
+
+[node name="ChatModel" type="NobodyWhoModel" parent="." unique_id=1900656608]
+model_path = "res://llm/Qwen3.5-0.8B-JP-Q4_K_M.gguf"
+
+[node name="Reranker" type="NobodyWhoModel" parent="." unique_id=1102453998]
+
+[node name="Encoded" type="Node" parent="." unique_id=690213532]
+
+[node name="NobodyWhoCrossEncoder" type="NobodyWhoCrossEncoder" parent="Encoded" unique_id=2053991431 node_paths=PackedStringArray("model_node")]
+model_node = NodePath("../../Reranker")
+
+[node name="Chat" type="Node" parent="." unique_id=1213020336]
+
+[node name="Red" type="NobodyWhoChat" parent="Chat" unique_id=1215159821 node_paths=PackedStringArray("model_node")]
+model_node = NodePath("../../ChatModel")
+allow_thinking = false
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=353984385]
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer" unique_id=2134203786]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PanelContainer" unique_id=665891004]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/PanelContainer/VBoxContainer" unique_id=512711747]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/PanelContainer/VBoxContainer" unique_id=552631147]
+layout_mode = 2
+
+[node name="OptionButton" type="OptionButton" parent="CanvasLayer/PanelContainer/VBoxContainer/HBoxContainer" unique_id=1551303794]
+layout_mode = 2
+selected = 0
+item_count = 3
+popup/item_0/text = "Red"
+popup/item_0/id = 0
+popup/item_1/text = "Green"
+popup/item_1/id = 1
+popup/item_2/text = "Blue"
+popup/item_2/id = 2
+
+[node name="LineEdit" type="LineEdit" parent="CanvasLayer/PanelContainer/VBoxContainer/HBoxContainer" unique_id=299573864]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Say Anything"
+
+[node name="TTS" type="Node" parent="." unique_id=189576590]
